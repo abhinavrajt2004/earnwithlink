@@ -160,7 +160,7 @@ spinBtn.addEventListener("click", () => {
     }
 });
 
-// Claim and Share logic remains unchanged
+// Claim and Share logic
 claimBtn.addEventListener("click", () => {
     if (redirectCount === 0) {
         window.open(directLinkAd, "_blank");
@@ -182,7 +182,7 @@ shareBtn.addEventListener("click", () => {
     if (shareCounter < 10) {
         shareCounter++;
         shareCount.textContent = shareCounter;
-        const shareText = encodeURIComponent("I just won an amazing prize on Spin & Win! Try it: [Your Website URL]");
+        const shareText = encodeURIComponent("I just won an amazing prize on Spin & Win! Try it: https://earnwithlink.xyz");
         window.open(`https://wa.me/?text=${shareText}`, "_blank");
         if (shareCounter === 5) {
             window.open(directLinkAd, "_blank");
