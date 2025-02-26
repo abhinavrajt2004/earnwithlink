@@ -185,3 +185,18 @@ footer {
     .arrow { border-top-width: 25px; border-left-width: 12px; border-right-width: 12px; }
     .ad-banner { padding: 0.6rem; margin: 1rem 0; }
 }
+.responsive-ad {
+    width: 100%;
+    max-width: 728px; /* Maximum ad width */
+    height: auto;
+    display: flex;
+    justify-content: center;
+    margin: 10px auto;
+    overflow: hidden;
+}
+
+.responsive-ad iframe {
+    width: 100%;
+    height: auto;
+    max-height: 90px; /* Maintain ad height */
+}
