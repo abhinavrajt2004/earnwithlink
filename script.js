@@ -9,14 +9,14 @@ const prizes = [
     "Try Again!"
 ];
 const colors = [
-    "#bee3f8", // Light blue
-    "#38b2ac", // Teal
-    "#f6ad55", // Warm orange
-    "#ed64a6", // Vibrant pink
-    "#68d391", // Lime green
-    "#b794f4", // Soft purple
-    "#fef08a", // Light yellow
-    "#fc8181"  // Coral
+    "#6b48ff", // Vibrant purple
+    "#00ddeb", // Bright cyan
+    "#ff9966", // Peach
+    "#ffe066", // Warm yellow
+    "#48ffbd", // Mint green
+    "#ff66cc", // Hot pink
+    "#9966ff", // Soft purple
+    "#ffcc99"  // Light peach
 ];
 const canvas = document.getElementById("wheel");
 const ctx = canvas.getContext("2d");
@@ -35,6 +35,7 @@ const directLinkAd = "https://www.effectiveratecpm.com/ihhrqh2yux?key=fcd03f4bab
 let currentAngle = 0;
 let spinning = false;
 let shareCounter = 0;
+let shareClickCount = 0;
 let hasSpun = localStorage.getItem("hasSpun") === "true";
 let redirectCount = 0;
 
@@ -69,26 +70,23 @@ function drawWheel() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     for (let i = 0; i < prizes.length; i++) {
-        // Draw segment
         ctx.beginPath();
         ctx.fillStyle = colors[i];
         ctx.moveTo(radius, radius);
         ctx.arc(radius, radius, radius, i * arc, (i + 1) * arc);
         ctx.fill();
         ctx.strokeStyle = "#fff";
-        ctx.lineWidth = 3;
+        ctx.lineWidth = 4;
         ctx.stroke();
 
-        // Draw text
         ctx.save();
-        ctx.fillStyle = ["#fef08a", "#bee3f8"].includes(colors[i]) ? "#2d3748" : "#fff"; // Dark text for light backgrounds
-        ctx.font = `bold ${radius * 0.1}px 'Poppins', sans-serif`;
+        ctx.fillStyle = ["#ffe066", "#ffcc99", "#48ffbd"].includes(colors[i]) ? "#2d3748" : "#fff"; // Dark text for light backgrounds
+        ctx.font = `bold ${radius * 0.12}px 'Poppins', sans-serif`;
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
         ctx.translate(radius, radius);
         ctx.rotate(i * arc + arc / 2);
 
-        // Enhanced text wrapping
         const maxWidth = radius * 0.6;
         const words = prizes[i].split(" ");
         let line1 = "", line2 = "";
@@ -107,8 +105,7 @@ function drawWheel() {
         if (line1 === "") line1 = currentLine.trim();
         else if (line2 === "") line2 = currentLine.trim();
 
-        // Precise vertical centering
-        const lineHeight = radius * 0.13;
+        const lineHeight = radius * 0.15;
         if (line2) {
             ctx.fillText(line1, radius * 0.55, -lineHeight / 2);
             ctx.fillText(line2, radius * 0.55, lineHeight / 2);
@@ -175,16 +172,15 @@ claimBtn.addEventListener("click", () => {
 });
 
 shareBtn.addEventListener("click", () => {
-    if (shareCounter === 0 && redirectCount === 1) {
-        window.open(directLinkAd, "_blank");
-        redirectCount++;
-    }
+    shareClickCount++;
     if (shareCounter < 10) {
         shareCounter++;
         shareCount.textContent = shareCounter;
         const shareText = encodeURIComponent("I just won an amazing prize on Spin & Win! Try it: https://earnwithlink.xyz");
         window.open(`https://wa.me/?text=${shareText}`, "_blank");
-        if (shareCounter === 5) {
+
+        // Show ad only on 3rd click
+        if (shareClickCount === 3) {
             window.open(directLinkAd, "_blank");
         }
     }
